@@ -1,5 +1,6 @@
 from featureNormalize import *
 from gradientDescentMulti import *
+from normalEqn import *
 
 print 'Loading data . . .'
 dataFile = open("ex1data2.txt","r")
@@ -52,7 +53,8 @@ print 'x normalized: ' + str(x)
 print 'mu = ' + str(mu)
 print 'sigma = ' + str(sigma)
 
-# translating x so that it is now an array of rows of data instead of an array of features
+# translating x so that it is now an array of rows of data instead of an array of features, this will make it easier
+# to perform gradient descent
 x1 = []
 for j in range(len(x[0])):
     x1.append([0] * len(x))
@@ -81,5 +83,23 @@ for i in range(len(theta)):
         price += theta[i] * x_new[i-1]
 
 print '\nPredicted price of a 1650 sq-ft, 3 br house (using gradient descent): $' + str(price)
-# print '\nProgram paused. Press enter to continue.'
-# wait = raw_input()
+print '\nProgram paused. Press enter to continue.'
+wait = raw_input()
+
+ones = np.ones(len(x1))
+x1 = np.insert(x1,0,ones,1)
+
+print 'Solving with normal equations...'
+theta2 = normalEqn(x1,y)
+print 'Theta computed from the normal equations: ' + str(theta2)
+
+normEqnPrice = 0
+for i in range(len(theta2)):
+    if i == 0:
+        normEqnPrice += theta2[i][0]
+    else:
+        normEqnPrice += theta2[i][0] * x_new[i-1]
+
+newPrice = str(normEqnPrice).strip('[').strip(']')
+
+print 'Predicted price of a 1650 sq-ft, 3 br house (using normal equations): $' + str(newPrice)
