@@ -102,4 +102,4 @@ for i in range(len(theta2)):
 
 newPrice = str(normEqnPrice).strip('[').strip(']')
 
-print 'Predicted price of a 1650 sq-ft, 3 br house (using normal equations): $' + str(newPrice)
+print 'Predicted price of a 1650 sq-ft, 3 br house (using normal equations): $' + newPrice
